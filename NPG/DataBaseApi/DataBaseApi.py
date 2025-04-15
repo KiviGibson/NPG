@@ -39,7 +39,7 @@ class DataBase:
 
     def execute(self, query: Query) -> list[PressureData]:
         queryString = query.getQuery()
-        if query.getType == QueryType.undefined:
+        if query.getType() == QueryType.undefined:
             raise Exception("Can't Execute undefined query")
         try:
             cursor = self._db.cursor()
@@ -88,26 +88,26 @@ class PressureQuery(Query):
         """Adds date range for SELECT query"""
         if self._type != QueryType.select: return self
         if not self._param:
-            self._query += f" WHERE date between ({f}, {f+t})"
+            self._query += f" WHERE (date BETWEEN {f} AND {f+t})"
             self._param = True
         else:
-            self._query += f" AND date BETWEEN ({f}, {f+t})"
+            self._query += f" AND (date BETWEEN {f} AND {f+t})"
         return self
 
     def addPressureRange(self, f: float, t: float = 0) -> Query:
         """Adds pressure value range for SELECT query"""
         if self._type != QueryType.select: return self
         if not self._param:
-            self._query += f" WHERE date BETWEEN ({f}, {f+t})"
+            self._query += f" WHERE (value BETWEEN {f} AND {f+t})"
             self._param = True
         else:
-            self._query += f" AND date BETWEEN ({f}, {f+t})"
+            self._query += f" AND (value BETWEEN {f} AND {f+t})"
         return self
     
     def addLimit(self, amount: int, first: int = 0) -> Query:
         """Adds max item LIMIT for SELECT query"""
         if self._type != QueryType.select: return self
-        self._query += f" LIMIT {amount}, {first}"
+        self._query += f" LIMIT {first}, {amount}"
         return self
 
     def addValue(self, datum: PressureData) -> Query:
