@@ -1,1 +1,1 @@
-from .DataBaseApi import DataBase, PressureData, PressureQuery
+from .DataBaseApi import Database, PressureData
