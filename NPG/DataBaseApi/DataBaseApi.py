@@ -21,34 +21,36 @@ class Database:
         self._db = sqlite.connect(db)
         cursor = self._db.cursor()
         cursor.execute("SELECT name FROM sqlite_master;")
-        if "pressure" in cursor.fetchall():
-            print("Database connected")
-            return
-        cursor.execute(
-            """
-            CREATE TABLE pressure(
-                id INTEGER PRIMARY KEY, 
-                user_id INTEGER, 
-                date INTEGER, 
-                value REAL, 
-                desc TEXT, 
-                FOREIGN KEY(user_id) REFERENCES user(id));
-            """
-        )
-        cursor.execute(
-            """
-            CREATE TABLE user(
-                id INTEGER PRIMARY KEY, 
-                login TEXT, 
-                password TEXT);
-            """
-        )
+        tables = cursor.fetchall()
+        if not ("pressure",) in tables:
+            cursor.execute(
+                """
+                CREATE TABLE pressure(
+                    id INTEGER PRIMARY KEY, 
+                    user_id INTEGER, 
+                    date INTEGER, 
+                    value REAL, 
+                    desc TEXT, 
+                    FOREIGN KEY(user_id) REFERENCES user(id));
+                """
+            )
+        if not ("user",) in tables:
+            cursor.execute(
+                """
+                CREATE TABLE user(
+                    id INTEGER PRIMARY KEY, 
+                    login TEXT, 
+                    password TEXT);
+                """
+            )
         self._db.commit()
-        print("Database created")
+        print("Database connected")
 
-    def __exit__(self) -> None:
+    def close(self) -> None:
         self._db.close()
+        print("Database disconnected")
 
 
 if __name__ == "__main__":
     d = Database("test.db")
+    d.close()
