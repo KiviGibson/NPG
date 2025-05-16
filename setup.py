@@ -6,7 +6,6 @@ with open("requirements.txt") as file:
 setup(
     name="NPG",
     version="0.1",
-    packeges = find_packages(),
+    packeges=find_packages(),
     install_requires=requirements,
 )
-
