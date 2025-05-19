@@ -1,5 +1,5 @@
 from jwt import encode, decode
-from ..DataBaseApi.DataBaseApi import Database
+from DatabaseApi import Database
 
 
 class Auth:
@@ -7,9 +7,8 @@ class Auth:
         self._db = db
 
     def checkCredentials(self, jwt: str) -> int:
-        jwt = decode(jwt, "passphrase", algorithm="HS256")
-        print(jwt)
-        return -1
+        data = decode(jwt, "passphrase", algorithms=["HS256"])
+        return self._db.getUser(data["login"], data["password"])
 
     def login(self, login: str, password: str) -> str | int:
         id = self._db.getUser(login, password)
@@ -30,5 +29,6 @@ if __name__ == "__main__":
     d = Database(":memory:")
     a = Auth(d)
     jwt = a.register("Kivi", "Gibson")
-    if jwt is str:
-        a.checkCredentials(jwt)
+    if type(jwt) is str:
+        print(a.checkCredentials(jwt))
+    print("Womp Womp")

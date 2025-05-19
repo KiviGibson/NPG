@@ -7,7 +7,6 @@ from dataclasses import dataclass
 class PressureData:
     """DataClass storing info about pressure"""
 
-    _id: int
     date: int
     value: float
     desc: str
@@ -76,6 +75,36 @@ class Database:
             """,
             [login, password],
         )
+        self._db.commit()
+
+    def getData(
+        self,
+        id: int,
+        date: tuple[int, int] | None = None,
+        value: tuple[float, float] | None = None,
+    ) -> list[PressureData]:
+        res: list[PressureData] = []
+        cursor = self._db.cursor()
+        query: str = "SELECT date, value, desc FROM pressure WHERE user_id = ? "
+        params: list = [id]
+        if date is not None:
+            query += " AND (date BETWEEN ? AND ?) "
+            params.append(date[0])
+            params.append(date[1])
+        if value is not None:
+            query += " AND (value BETWEEN ? AND ?) "
+            params.append(value[0])
+            params.append(value[1])
+        cursor.execute(query + ";", params)
+        for datum in cursor.fetchall():
+            res.append(PressureData(datum["date"], datum["value"], datum["desc"]))
+        return res
+
+    def addData(self, id: int, datum: PressureData) -> None:
+        cursor = self._db.cursor()
+        query = "INSERT INTO pressure(user_id, date, value, desc) VALUES(?, ?, ?, ?);"
+        params = [id, datum.date, datum.value, datum.desc]
+        cursor.execute(query, params)
         self._db.commit()
 
     def close(self) -> None:
