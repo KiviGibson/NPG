@@ -1,4 +1,3 @@
-import random
 import unittest
 from NPG import Database, PressureData, Auth
 
@@ -8,7 +7,7 @@ class DatabaseTests(unittest.TestCase):
         db = Database(":memory:")
         test_data = [PressureData(i, i * 1.75, f"Numer {i}.") for i in range(5)]
         db.createUser("test", "test")
-        user_id = db.getUser("test", "test")
+        user_id = db.getUser("test")[0]
         for datum in test_data:
             db.addData(user_id, datum)
         for i, datum in enumerate(db.getData(user_id)):
@@ -22,7 +21,7 @@ class DatabaseTests(unittest.TestCase):
         login, password = "Test, test".split(", ")
         self.assertEqual(db.createUser(login, password), None)
         self.assertEqual(db.createUser(login, password), -400)
-        self.assertEqual(db.getUser(login, password), 1)
+        self.assertEqual(db.getUser(login)[0], 1)
         db.close()
 
     def test_filters(self):
@@ -40,11 +39,11 @@ class AuthTests(unittest.TestCase):
     def test_register_login(self):
         db = Database(":memory:")
         auth = Auth(db)
-        res_jwt = auth.register("test", "test")
+        reg_jwt = auth.register("test", "test")
         login_jwt = auth.login("test", "test")
-        self.assertEqual(res_jwt, login_jwt)
-        err_res = auth.register("test", "test")
-        self.assertEqual(err_res, -400)
+        self.assertEqual(reg_jwt, login_jwt)
+        err_reg = auth.register("test", "test")
+        self.assertEqual(err_reg, -400)
         err_login = auth.login("tezt", "test")
         self.assertEqual(err_login, -404)
         db.close()
@@ -53,6 +52,7 @@ class AuthTests(unittest.TestCase):
         db = Database(":memory:")
         auth = Auth(db)
         res_jwt = auth.register("test", "test")
+        print(res_jwt)
         err_jwt = auth.check_credentials(None)
         id = auth.check_credentials(res_jwt)
         self.assertEqual(id, 1)

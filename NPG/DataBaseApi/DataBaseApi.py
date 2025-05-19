@@ -44,19 +44,19 @@ class Database:
         self._db.commit()
         print("Database connected")
 
-    def getUser(self, login: str, password: str) -> int:
+    def getUser(self, login: str) -> int:
         cursor = self._db.cursor()
         cursor.execute(
             """
-            SELECT id FROM user 
-            WHERE login = ? AND password = ?;
+            SELECT id, password FROM user 
+            WHERE login = ?;
             """,
-            [login, password],
+            [login],
         )
         data = cursor.fetchall()
         if len(data) != 1:
             return -404
-        return data[0][0]  # [(val,)] -> val
+        return data[0]  # [(id, password)] -> (id, password)
 
     def createUser(self, login: str, password: str) -> None | int:
         cursor = self._db.cursor()
