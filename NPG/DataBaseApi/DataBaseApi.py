@@ -55,8 +55,8 @@ class Database:
         )
         data = cursor.fetchall()
         if len(data) != 1:
-            return -1
-        return data[0][0]
+            return -404
+        return data[0][0]  # [(val,)] -> val
 
     def createUser(self, login: str, password: str) -> None | int:
         cursor = self._db.cursor()
@@ -68,7 +68,7 @@ class Database:
             [login],
         )
         if len(cursor.fetchall()) > 0:
-            return -1
+            return -400
         cursor.execute(
             """
             INSERT INTO user(login, password) VALUES(?,?);
@@ -76,6 +76,7 @@ class Database:
             [login, password],
         )
         self._db.commit()
+        return None
 
     def getData(
         self,
@@ -97,7 +98,7 @@ class Database:
             params.append(value[1])
         cursor.execute(query + ";", params)
         for datum in cursor.fetchall():
-            res.append(PressureData(datum["date"], datum["value"], datum["desc"]))
+            res.append(PressureData(datum[0], datum[1], datum[2]))
         return res
 
     def addData(self, id: int, datum: PressureData) -> None:
@@ -113,5 +114,5 @@ class Database:
 
 
 if __name__ == "__main__":
-    d = Database("test.db")
+    d = Database(":memory:")
     d.close()
