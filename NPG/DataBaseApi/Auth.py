@@ -6,9 +6,11 @@ class Auth:
     def __init__(self, db: Database) -> None:
         self._db = db
 
-    def checkCredentials(self, jwt: str) -> int:
-        data = decode(jwt, "passphrase", algorithms=["HS256"])
-        return self._db.getUser(data["login"], data["password"])
+    def check_credentials(self, jwt: str | None) -> int:
+        if jwt is None:
+            return -1
+        login, password = decode(jwt, "passphrase", algorithms=["HS256"])
+        return self._db.getUser(login, password)
 
     def login(self, login: str, password: str) -> str | int:
         id = self._db.getUser(login, password)
@@ -30,5 +32,5 @@ if __name__ == "__main__":
     a = Auth(d)
     jwt = a.register("Kivi", "Gibson")
     if type(jwt) is str:
-        print(a.checkCredentials(jwt))
+        print(a.check_credentials(jwt))
     print("Womp Womp")
