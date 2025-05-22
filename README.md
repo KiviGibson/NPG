@@ -3,5 +3,8 @@
 ## Instalation
 
 ```bash
-python -m pip install -e .
+    python -m venv ./.env
+    source ./.env/bin/activate
+    python -m pip install -e .
 ```
+
