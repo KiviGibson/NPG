@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://qukwt44kv7xs"]
+
+[ext_resource type="PackedScene" uid="uid://d17vcyaqxkk7" path="res://LoginScreen/Auth.tscn" id="1_nfj5t"]
+
+[sub_resource type="Environment" id="Environment_65yaf"]
+background_mode = 1
+background_color = Color(0.129412, 0.129412, 0.129412, 1)
+
+[node name="Base" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_65yaf")
+
+[node name="Auth" parent="." instance=ExtResource("1_nfj5t")]
