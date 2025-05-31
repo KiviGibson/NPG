@@ -1,0 +1,468 @@
+[gd_scene load_steps=4 format=3 uid="uid://tvcnnpqwcj7g"]
+
+[ext_resource type="Script" uid="uid://b0psncspq2vem" path="res://Dashboard/Callendar.gd" id="1_1q042"]
+
+[sub_resource type="Gradient" id="Gradient_1q042"]
+colors = PackedColorArray(0.202932, 0.59158, 0.673845, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jimqf"]
+gradient = SubResource("Gradient_1q042")
+width = 1
+
+[node name="Callendar" type="Control" node_paths=PackedStringArray("title", "container")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1q042")
+title = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Label")
+container = NodePath("MarginContainer/VBoxContainer/GridContainer")
+
+[node name="Panel" type="Panel" parent="."]
+clip_children = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+texture = SubResource("GradientTexture1D_jimqf")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+self_modulate = Color(0.7547, 0.00737399, 0.143325, 1)
+layout_mode = 2
+alignment = 1
+
+[node name="Prev" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "MONTH"
+horizontal_alignment = 1
+
+[node name="Next" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = ">"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 7
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer3"]
+layout_mode = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer4"]
+layout_mode = 2
+
+[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer5"]
+layout_mode = 2
+
+[node name="MarginContainer6" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer6"]
+layout_mode = 2
+
+[node name="MarginContainer7" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer7"]
+layout_mode = 2
+
+[node name="MarginContainer8" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer8"]
+layout_mode = 2
+
+[node name="MarginContainer9" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer9"]
+layout_mode = 2
+
+[node name="MarginContainer10" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer10"]
+layout_mode = 2
+
+[node name="MarginContainer11" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer11"]
+layout_mode = 2
+
+[node name="MarginContainer12" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer12"]
+layout_mode = 2
+
+[node name="MarginContainer13" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer13"]
+layout_mode = 2
+
+[node name="MarginContainer14" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer14"]
+layout_mode = 2
+
+[node name="MarginContainer15" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer15"]
+layout_mode = 2
+
+[node name="MarginContainer16" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer16"]
+layout_mode = 2
+
+[node name="MarginContainer17" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer17"]
+layout_mode = 2
+
+[node name="MarginContainer18" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer18"]
+layout_mode = 2
+
+[node name="MarginContainer19" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer19"]
+layout_mode = 2
+
+[node name="MarginContainer20" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer20"]
+layout_mode = 2
+
+[node name="MarginContainer21" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer21"]
+layout_mode = 2
+
+[node name="MarginContainer22" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer22"]
+layout_mode = 2
+
+[node name="MarginContainer23" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer23"]
+layout_mode = 2
+
+[node name="MarginContainer24" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer24"]
+layout_mode = 2
+
+[node name="MarginContainer25" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer25"]
+layout_mode = 2
+
+[node name="MarginContainer26" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer26"]
+layout_mode = 2
+
+[node name="MarginContainer27" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer27"]
+layout_mode = 2
+
+[node name="MarginContainer28" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer28"]
+layout_mode = 2
+
+[node name="MarginContainer29" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer29"]
+layout_mode = 2
+
+[node name="MarginContainer30" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer30"]
+layout_mode = 2
+
+[node name="MarginContainer31" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer31"]
+layout_mode = 2
+
+[node name="MarginContainer32" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/MarginContainer32"]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Prev" to="." method="reduce_month"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Next" to="." method="increase_month"]
