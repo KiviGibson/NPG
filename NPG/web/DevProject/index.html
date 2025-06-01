@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar & Chart Dashboard</title>
+  <link rel="stylesheet" href="resources/css/index.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    
+    <div class="calendar">
+      <h2>June 2025</h2>
+      <div id="days"></div>
+      <div class="editor">
+        <h3>Edit Entry</h3>
+        <textarea id="entry" rows="4" style="width:100%"></textarea>
+        <button onclick="saveEntry()">Save</button>
+      </div>
+    </div>
+
+
+    <div class="chart-container">
+      <div class="search">
+        <input type="text" id="searchInput" placeholder="Search by day or value...">
+        <button onclick="searchEntries()">Search</button>
+      </div>
+      <canvas id="statsChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const daysEl = document.getElementById('days');
+    const entryEl = document.getElementById('entry');
+    const searchInput = document.getElementById('searchInput');
+    let selectedDay = null;
+    const entries = {};
+
+    for (let i = 1; i <= 30; i++) {
+      const div = document.createElement('div');
+      div.className = 'day';
+      div.textContent = i;
+      div.onclick = () => selectDay(i, div);
+      daysEl.appendChild(div);
+    }
+
+    function selectDay(day, element) {
+      selectedDay = day;
+      document.querySelectorAll('.day').forEach(d => d.classList.remove('selected'));
+      element.classList.add('selected');
+      entryEl.value = entries[day] || '';
+    }
+
+    function saveEntry() {
+      if (selectedDay) {
+        entries[selectedDay] = entryEl.value;
+        updateChart();
+      }
+    }
+
+    function searchEntries() {
+      const query = searchInput.value.toLowerCase();
+      const found = Object.entries(entries).find(([day, val]) =>
+        day === query || val.toLowerCase().includes(query)
+      );
+      if (found) {
+        const [day] = found;
+        document.querySelectorAll('.day')[day - 1].scrollIntoView({ behavior: 'smooth' });
+      } else {
+        alert('No match found');
+      }
+    }
+
+    function updateChart() {
+      const labels = Object.keys(entries);
+      const data = labels.map(day => entries[day].length);
+
+      statsChart.data.labels = labels;
+      statsChart.data.datasets[0].data = data;
+      statsChart.update();
+    }
+
+    const ctx = document.getElementById('statsChart').getContext('2d');
+    const statsChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Entry Length by Day',
+          data: [],
+          backgroundColor: '#2196f3'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
