@@ -19,13 +19,39 @@ body {
 .calendar h2 {
   margin-top: 0;
 }
+
+.weekdays {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #ddd;
+}
+
+.weekdays li {
+  display: inline-block;
+  width: 13.6%;
+  color: #666;
+  text-align: center;
+}
+
+.empty_day {
+  display: inline-block;
+  width: 13.6%;
+  margin: 2px;
+  padding: 10px 0;
+  text-align: center;
+  border:1px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #f7f5f5;
+}
+
 .day {
   display: inline-block;
-  width: 14%;
-  padding: 10px;
+  width: 13.6%;
   margin: 2px;
+  padding: 10px 0;
   text-align: center;
-  border: 1px solid #ccc;
+  border:1px;
   border-radius: 6px;
   cursor: pointer;
   background-color: #eaeaea;
@@ -48,4 +74,17 @@ body {
 }
 .search {
   margin-bottom: 1rem;
+}
+
+.button {
+  border: none;
+  background-color: #eaeaea;
+  color: #2196f3;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }

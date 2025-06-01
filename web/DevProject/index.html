@@ -9,33 +9,71 @@
 </head>
 <body>
   <div class="container">
-    
-    <div class="calendar">
-      <h2>June 2025</h2>
-      <div id="days"></div>
-      <div class="editor">
-        <h3>Edit Entry</h3>
-        <textarea id="entry" rows="4" style="width:100%"></textarea>
-        <button onclick="saveEntry()">Save</button>
+     <div class="search">
+          <input type="text" id="searchInput" placeholder="Search by day or value...">
+          <button onclick="searchEntries()">Search</button>
       </div>
+
+
+    <div class="calendar">
+        <h2>June 2025</h2>
+        <ul class="weekdays">
+          <li>Mo</li>
+          <li>Tu</li>
+          <li>We</li>
+          <li>Th</li>
+          <li>Fr</li>
+          <li>Sa</li>
+          <li>Su</li>
+        </ul>
+        
+        <div id="days"></div>
+       
+         
+
+       
     </div>
 
 
     <div class="chart-container">
-      <div class="search">
-        <input type="text" id="searchInput" placeholder="Search by day or value...">
-        <button onclick="searchEntries()">Search</button>
-      </div>
+      
       <canvas id="statsChart" height="200"></canvas>
+
+    
     </div>
+    
+        <!-- Hidden editor modal -->
+      <div id="editorModal" class="editor-modal hidden">
+        <div class="editor-content">
+          <h3 id="editorTitle">Edit Entry</h3>
+          <p><strong>Day:</strong> <span id="selectedDayDisplay"></span></p>
+          <textarea id="entry" rows="4" style="width:100%"></textarea>
+          <button onclick="saveEntry()">Save</button>
+          <button onclick="closeEditor()">Close</button>
+        </div>
+      </div>
+    
+      <button class="button">Donate</button>
+    
   </div>
 
   <script>
     const daysEl = document.getElementById('days');
     const entryEl = document.getElementById('entry');
     const searchInput = document.getElementById('searchInput');
+    const editorModal = document.getElementById('editorModal');
+    const selectedDayDisplay = document.getElementById('selectedDayDisplay');
+
     let selectedDay = null;
     const entries = {};
+
+     for (let i = 1; i <= 6; i++) {
+      const div = document.createElement('div');
+      div.className = 'empty_day';
+      div.textContent = " ";
+      div.onclick = () => selectDay(i, div);
+      daysEl.appendChild(div);
+    } 
 
     for (let i = 1; i <= 30; i++) {
       const div = document.createElement('div');
@@ -45,18 +83,25 @@
       daysEl.appendChild(div);
     }
 
-    function selectDay(day, element) {
+     function selectDay(day, element) {
       selectedDay = day;
       document.querySelectorAll('.day').forEach(d => d.classList.remove('selected'));
       element.classList.add('selected');
       entryEl.value = entries[day] || '';
+      selectedDayDisplay.textContent = `June ${day}, 2025`;
+      editorModal.classList.remove('hidden');
     }
 
     function saveEntry() {
       if (selectedDay) {
         entries[selectedDay] = entryEl.value;
         updateChart();
+        closeEditor();
       }
+    }
+
+     function closeEditor() {
+      editorModal.classList.add('hidden');
     }
 
     function searchEntries() {
