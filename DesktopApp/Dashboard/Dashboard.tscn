@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://blv5vluivdowo"]
+
+[ext_resource type="Script" uid="uid://cos2i3i8gm78e" path="res://Dashboard/Dashboard.gd" id="1_ob8ja"]
+[ext_resource type="PackedScene" uid="uid://ri7ngrqcrbjh" path="res://Dashboard/Filters.tscn" id="3_5txqv"]
+[ext_resource type="PackedScene" uid="uid://drt5is70tl23" path="res://Dashboard/Graph.tscn" id="4_g7hxu"]
+
+[node name="Dashboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ob8ja")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Filters" parent="HBoxContainer" instance=ExtResource("3_5txqv")]
+z_index = 1
+z_as_relative = false
+custom_minimum_size = Vector2(265, 0)
+layout_mode = 2
+
+[node name="Graph" parent="HBoxContainer" instance=ExtResource("4_g7hxu")]
+layout_mode = 2
+size_flags_horizontal = 3

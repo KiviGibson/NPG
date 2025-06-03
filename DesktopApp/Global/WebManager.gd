@@ -4,10 +4,11 @@ extends Node
 	"User-Agent: App/1.0 (GODOT)",
 	"Accept: JSON",
 ]
+@export var host: Dictionary = {"ip":"localhost","port":5000}
 
 func login(login: String, password: String) -> String:
 	var http: HTTPClient = HTTPClient.new()
-	var err: Error = http.connect_to_host("localhost", 5000)
+	var err: Error = http.connect_to_host(host["ip"], host["port"])
 	if err != OK:
 		return "Can't connect to host"
 	while (http.get_status() == HTTPClient.STATUS_CONNECTING or
@@ -36,7 +37,7 @@ func login(login: String, password: String) -> String:
 
 func register(login:String, password: String) -> String:
 	var http: HTTPClient = HTTPClient.new()
-	var err: Error = http.connect_to_host("localhost", 5000)
+	var err: Error = http.connect_to_host(host["ip"], host["port"])
 	if err != OK:
 		return "Can't connect to host"
 	while (http.get_status() == HTTPClient.STATUS_CONNECTING or
@@ -65,7 +66,7 @@ func register(login:String, password: String) -> String:
 
 func get_data() -> String:
 	var http: HTTPClient = HTTPClient.new()
-	var err: Error = http.connect_to_host("localhost", 5000)
+	var err: Error = http.connect_to_host(host["ip"], host["port"])
 	if err != OK:
 		return "Can't connect to host"
 	while (http.get_status() == HTTPClient.STATUS_CONNECTING or
