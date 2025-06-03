@@ -4,9 +4,9 @@ extends Node
 	"User-Agent: App/1.0 (GODOT)",
 	"Accept: JSON",
 ]
-@export var host: Dictionary = {"ip":"localhost","port":5000}
+var host: Dictionary = {"ip":"localhost","port":5000}
 
-func login(login: String, password: String) -> String:
+func login(login_str: String, password: String) -> String:
 	var http: HTTPClient = HTTPClient.new()
 	var err: Error = http.connect_to_host(host["ip"], host["port"])
 	if err != OK:
@@ -17,8 +17,8 @@ func login(login: String, password: String) -> String:
 		await get_tree().process_frame
 	if http.get_status() != HTTPClient.STATUS_CONNECTED:
 		return "Connection failed"
-	var req_headers: Array[String] = generate_headers("{'login':"+login+"','password':'"+password+"'}")
-	err = http.request(HTTPClient.METHOD_POST, "/login", headers)
+	var req_headers: Array[String] = generate_headers("{'login':"+login_str+"','password':'"+password+"'}")
+	err = http.request(HTTPClient.METHOD_POST, "/login", req_headers)
 	if err != OK:
 		return "Something went wrong!"
 	while http.get_status() == HTTPClient.STATUS_REQUESTING:
@@ -35,7 +35,7 @@ func login(login: String, password: String) -> String:
 			return "Endpoint not found"
 	return "No response"
 
-func register(login:String, password: String) -> String:
+func register(login_str:String, password: String) -> String:
 	var http: HTTPClient = HTTPClient.new()
 	var err: Error = http.connect_to_host(host["ip"], host["port"])
 	if err != OK:
@@ -46,8 +46,8 @@ func register(login:String, password: String) -> String:
 		await get_tree().process_frame
 	if http.get_status() != HTTPClient.STATUS_CONNECTED:
 		return "Connection failed"
-	var req_headers: Array[String] = generate_headers("{'login':"+login+"','password':'"+password+"'}")
-	err = http.request(HTTPClient.METHOD_POST, "/register", headers)
+	var req_headers: Array[String] = generate_headers("{'login':"+login_str+"','password':'"+password+"'}")
+	err = http.request(HTTPClient.METHOD_POST, "/register", req_headers)
 	if err != OK:
 		return "Something went wrong!"
 	while http.get_status() == HTTPClient.STATUS_REQUESTING:
@@ -64,7 +64,7 @@ func register(login:String, password: String) -> String:
 			return "Endpoint not found"
 	return "No response"
 
-func get_data() -> String:
+func get_data(_filters: Dictionary) -> String:
 	var http: HTTPClient = HTTPClient.new()
 	var err: Error = http.connect_to_host(host["ip"], host["port"])
 	if err != OK:
@@ -76,7 +76,7 @@ func get_data() -> String:
 	if http.get_status() != HTTPClient.STATUS_CONNECTED:
 		return "Connection failed"
 	var req_headers: Array[String] = generate_headers()
-	err = http.request(HTTPClient.METHOD_POST, "/register", headers)
+	err = http.request(HTTPClient.METHOD_POST, "/register", req_headers)
 	if err != OK:
 		return "Something went wrong!"
 	while http.get_status() == HTTPClient.STATUS_REQUESTING:

@@ -64,8 +64,10 @@ func  update_callendar():
 	changed.emit()
 
 func get_date() -> int:
+	if not date:
+		return 0
 	return Time.get_unix_time_from_datetime_dict(date)
-	
+
 func set_date(unix: int):
 	if "day" in date:
 		container.get_child(date["day"]-1).get_child(0).self_modulate = Color(1,1,1)

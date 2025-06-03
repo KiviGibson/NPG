@@ -1,0 +1,82 @@
+[gd_scene load_steps=4 format=3 uid="uid://drt5is70tl23"]
+
+[ext_resource type="Script" uid="uid://cd5ov32aa3phw" path="res://Dashboard/Graph/Graph.gd" id="1_6bdby"]
+[ext_resource type="PackedScene" uid="uid://dn7fxv07rhfk" path="res://Dashboard/Graph/PojedynczyElement.tscn" id="1_byorb"]
+[ext_resource type="PackedScene" uid="uid://b2km4g7ugvg8l" path="res://Dashboard/Graph/GraphElement.tscn" id="3_cptwm"]
+
+[node name="Graph" type="Control" node_paths=PackedStringArray("graph_data", "graph_line")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6bdby")
+graph_data = NodePath("MarginContainer/DataSection/MarginContainer/ScrollContainer/HBoxContainer")
+graph_element = ExtResource("3_cptwm")
+max_pressure_value = 210
+line = ExtResource("1_byorb")
+graph_line = NodePath("MarginContainer/Background/Linie/Podziałka")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Background" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Opis osi" type="Control" parent="MarginContainer/Background"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/Background/Opis osi"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_right = 71.0
+offset_bottom = 11.5
+grow_vertical = 2
+rotation = -1.57066
+size_flags_horizontal = 4
+text = "Ciśnienie"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Linie" type="MarginContainer" parent="MarginContainer/Background"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_bottom = 30
+
+[node name="Podziałka" type="VBoxContainer" parent="MarginContainer/Background/Linie"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_constants/separation = 0
+
+[node name="DataSection" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/DataSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 60
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/DataSection/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/DataSection/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

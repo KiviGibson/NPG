@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ri7ngrqcrbjh"]
 
-[ext_resource type="Script" uid="uid://6dgewurlr4vu" path="res://Dashboard/Filters.gd" id="1_00dyx"]
-[ext_resource type="PackedScene" uid="uid://tvcnnpqwcj7g" path="res://Dashboard/Callendar.tscn" id="1_hlbep"]
+[ext_resource type="Script" uid="uid://6dgewurlr4vu" path="res://Dashboard/Menu/Filters.gd" id="1_00dyx"]
+[ext_resource type="PackedScene" uid="uid://tvcnnpqwcj7g" path="res://Dashboard/Menu/Callendar.tscn" id="1_hlbep"]
 
 [node name="Filters" type="Control" node_paths=PackedStringArray("max_value", "min_value", "maxl", "minl", "date_min", "date_max")]
 layout_mode = 3
@@ -94,7 +94,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="Commit" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Update"
 
@@ -102,3 +102,4 @@ text = "Update"
 [connection signal="drag_ended" from="Panel/MarginContainer/VBoxContainer/HBoxContainer2/HSlider" to="." method="update"]
 [connection signal="changed" from="Panel/MarginContainer/VBoxContainer/Callendar" to="." method="update"]
 [connection signal="changed" from="Panel/MarginContainer/VBoxContainer/Callendar2" to="." method="update"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/Commit" to="." method="commit"]

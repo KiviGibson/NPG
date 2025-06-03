@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://tvcnnpqwcj7g"]
 
-[ext_resource type="Script" uid="uid://b0psncspq2vem" path="res://Dashboard/Callendar.gd" id="1_1q042"]
+[ext_resource type="Script" uid="uid://b0psncspq2vem" path="res://Dashboard/Menu/Callendar.gd" id="1_1q042"]
 
 [sub_resource type="Gradient" id="Gradient_1q042"]
 colors = PackedColorArray(0.202932, 0.59158, 0.673845, 1, 1, 1, 1, 1)
