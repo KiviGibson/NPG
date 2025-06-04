@@ -1,16 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2km4g7ugvg8l"]
+[gd_scene load_steps=8 format=3 uid="uid://b2km4g7ugvg8l"]
 
 [ext_resource type="Script" uid="uid://ckw5drwbbdfq" path="res://Dashboard/Graph/GraphElement.gd" id="1_cc7ex"]
 
-[sub_resource type="Gradient" id="Gradient_sftiy"]
-offsets = PackedFloat32Array(0.00390625, 1)
-colors = PackedColorArray(0, 1, 0, 1, 0, 1, 0, 1)
+[sub_resource type="Gradient" id="Gradient_cc7ex"]
+colors = PackedColorArray(0.546531, 0.938322, 0.507397, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_v2hey"]
-gradient = SubResource("Gradient_sftiy")
-width = 2
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mqjdd"]
+gradient = SubResource("Gradient_cc7ex")
+width = 1
 
-[node name="GraphElement" type="VBoxContainer" node_paths=PackedStringArray("size", "value_label", "date_label")]
+[sub_resource type="Gradient" id="Gradient_1mhif"]
+colors = PackedColorArray(0.851699, 0.349622, 0.323902, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rua26"]
+gradient = SubResource("Gradient_1mhif")
+width = 1
+
+[sub_resource type="Gradient" id="Gradient_0r5qc"]
+colors = PackedColorArray(0.359932, 0.572988, 0.924082, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_706ia"]
+gradient = SubResource("Gradient_0r5qc")
+width = 1
+
+[node name="GraphElement" type="VBoxContainer" node_paths=PackedStringArray("size", "date_label")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,26 +33,33 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 2
 script = ExtResource("1_cc7ex")
-size = NodePath("TextureRect")
-value_label = NodePath("TextureRect/Label")
+size = [NodePath("HBoxContainer/First"), NodePath("HBoxContainer/Second"), NodePath("HBoxContainer/Third")]
 date_label = NodePath("Label2")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(20, 200)
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-size_flags_vertical = 8
-texture = SubResource("GradientTexture1D_v2hey")
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="TextureRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "180"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="First" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = SubResource("GradientTexture1D_mqjdd")
+
+[node name="Second" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = SubResource("GradientTexture1D_rua26")
+
+[node name="Third" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = SubResource("GradientTexture1D_706ia")
 
 [node name="Label2" type="Label" parent="."]
 custom_minimum_size = Vector2(0, 26)

@@ -11,6 +11,7 @@ func _ready() -> void:
 	date["minute"] = 0
 	date["second"] = 0
 	date["hour"] = 0
+	change_daycount(date["month"])
 	update_callendar()
 	var counter := 1
 	for child in container.get_children():

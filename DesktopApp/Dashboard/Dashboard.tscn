@@ -32,5 +32,6 @@ layout_mode = 2
 [node name="Graph" parent="HBoxContainer" instance=ExtResource("4_g7hxu")]
 layout_mode = 2
 size_flags_horizontal = 3
+max_pressure_value = 230
 
 [connection signal="commit_changes" from="HBoxContainer/Filters" to="." method="update_graph"]

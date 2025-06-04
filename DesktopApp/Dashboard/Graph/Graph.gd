@@ -6,14 +6,13 @@ extends Node
 @export var max_pressure_value: int
 @export var line: PackedScene
 @export var graph_line: Control
-
 func _ready() -> void:
 	for value in range(max_pressure_value,-1,-10):
 		var tmp:LineElement = line.instantiate()
 		tmp.set_value(value)
 		graph_line.add_child(tmp)
 
-func update(data:Dictionary[String,int]) -> void:
+func update(data:Dictionary[String,Array]) -> void:
 	for child in graph_data.get_children():
 		graph_data.remove_child(child)
 		child.queue_free()
