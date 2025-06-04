@@ -1,3 +1,9 @@
+.day.normal { background-color: #a8e6a3; }      /* Green */
+.day.elevated { background-color: #fff176; }    /* Yellow */
+.day.high { background-color: #ff8a65; }        /* Orange */
+.day.critical { background-color: #e57373; }    /* Red */
+
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -6,7 +12,7 @@ body {
 }
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: 1rem;
   padding: 1rem;
 }
@@ -76,7 +82,7 @@ body {
   margin-bottom: 1rem;
 }
 
-.button {
+.buttonDonate {
   border: none;
   background-color: #eaeaea;
   color: #2196f3;
