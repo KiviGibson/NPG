@@ -8,7 +8,7 @@ class PressureData:
     """DataClass storing info about pressure"""
 
     date: int
-    value: float
+    value: list[float]
     desc: str
 
 
@@ -27,7 +27,9 @@ class Database:
                     id INTEGER PRIMARY KEY, 
                     user_id INTEGER, 
                     date INTEGER, 
-                    value REAL, 
+                    sys REAL,
+                    dys REAL,
+                    pulse REAL, 
                     desc TEXT, 
                     FOREIGN KEY(user_id) REFERENCES user(id));
                 """
@@ -103,8 +105,8 @@ class Database:
 
     def addData(self, id: int, datum: PressureData) -> None:
         cursor = self._db.cursor()
-        query = "INSERT INTO pressure(user_id, date, value, desc) VALUES(?, ?, ?, ?);"
-        params = [id, datum.date, datum.value, datum.desc]
+        query = "INSERT INTO pressure(user_id, date, sys, dys, pulse, desc) VALUES(?, ?, ?, ?, ?, ?);"
+        params = [id, datum.date, *datum.value, datum.desc]
         cursor.execute(query, params)
         self._db.commit()
 
