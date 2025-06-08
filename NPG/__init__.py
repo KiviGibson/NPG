@@ -1,2 +1,2 @@
-from .DatabaseApi.DatabaseApi import Database, PressureData
-from .DatabaseApi.Auth import Auth
+from .DataBaseApi.DataBaseApi import Database, PressureData
+from .DataBaseApi.Auth import Auth

@@ -5,15 +5,17 @@ from NPG import Database, PressureData, Auth
 class DatabaseTests(unittest.TestCase):
     def test_check_insert_and_get_data_methods(self):
         db = Database(":memory:")
-        test_data = [PressureData(i, i * 1.75, f"Numer {i}.") for i in range(5)]
+        test_data = [
+            PressureData(i, [int(i * 1.5), i * 2, i], f"Numer {i}.") for i in range(5)
+        ]
         db.createUser("test", "test")
         user_id = db.getUser("test")[0]
         for datum in test_data:
             db.addData(user_id, datum)
-        for i, datum in enumerate(db.getData(user_id)):
+        for i, datum in enumerate(db.getData(user_id, filters={})):
             self.assertEqual(datum.date, i)
             self.assertEqual(datum.desc, f"Numer {i}.")
-            self.assertEqual(datum.value, i * 1.75)
+            self.assertEqual(datum.value, (int(i * 1.5), i * 2, i))
         db.close()
 
     def test_check_insert_and_get_user_methods(self):
@@ -27,10 +29,10 @@ class DatabaseTests(unittest.TestCase):
     def test_filters(self):
         db = Database(":memory:")
         db.createUser("test", "test")
-        db.addData(1, PressureData(10, 20, "Good"))
-        db.addData(1, PressureData(10, 25, "Bad"))
-        db.addData(1, PressureData(25, 20, "Bad"))
-        data = db.getData(1, (10, 10), (20, 20))
+        db.addData(1, PressureData(10, [20, 30, 40], "Good"))
+        db.addData(1, PressureData(10, [25, 35, 45], "Bad"))
+        db.addData(1, PressureData(25, [20, 30, 40], "Bad"))
+        data = db.getData(1, {"date": (10, 10), "sys": (20, 20)})
         for datum in data:
             self.assertEqual(datum.desc, "Good")
 
