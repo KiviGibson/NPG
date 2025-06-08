@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open("requirements.txt") as file:
     requirements = file.read().splitlines()
@@ -6,6 +6,6 @@ with open("requirements.txt") as file:
 setup(
     name="NPG",
     version="0.1",
-    packeges=find_packages(),
+    packages=["NPG"],
     install_requires=requirements,
 )
