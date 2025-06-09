@@ -13,9 +13,13 @@ func update_graph() -> void:
 	for value in range(filter_settings["date"][0], filter_settings["date"][1]+1, 86400):
 		var dict := Time.get_datetime_dict_from_unix_time(value)
 		var napis: String = str(dict["day"]) +"-"+str(dict["month"])
-		var num := randi_range(filter_settings["value"][0], filter_settings["value"][1])
 		@warning_ignore("integer_division")
-		list[napis] = [num, num-20, num/2]
+		list[napis] = [
+			randi_range(filter_settings["sys"][0], filter_settings["sys"][1]),
+			randi_range(filter_settings["dys"][0], filter_settings["dys"][1]),
+			randi_range(filter_settings["pulse"][0], filter_settings["pulse"][1])
+			]
+			
 	# ------------------------------------
 	var data :=  list # await WebManager.get_data(filter_settings)
 	# check if data is correct then

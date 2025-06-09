@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://6dgewurlr4vu" path="res://Dashboard/Menu/Filters.gd" id="1_00dyx"]
 [ext_resource type="PackedScene" uid="uid://tvcnnpqwcj7g" path="res://Dashboard/Menu/Callendar.tscn" id="1_hlbep"]
 
-[node name="Filters" type="Control" node_paths=PackedStringArray("max_value", "min_value", "maxl", "minl", "date_min", "date_max")]
+[node name="Filters" type="Control" node_paths=PackedStringArray("max_value", "min_value", "date_min", "date_max")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,10 +11,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_00dyx")
-max_value = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer/HSlider")
-min_value = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer2/HSlider")
-maxl = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer/Label")
-minl = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer2/Label")
+max_value = [NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer4/Max"), NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer5/Max"), NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer3/Max")]
+min_value = [NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer4/Min"), NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer5/Min"), NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer3/Min")]
 date_min = NodePath("Panel/MarginContainer/VBoxContainer/Callendar")
 date_max = NodePath("Panel/MarginContainer/VBoxContainer/Callendar2")
 
@@ -28,9 +26,10 @@ grow_vertical = 2
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 custom_minimum_size = Vector2(266, 0)
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 266.0
+grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
@@ -44,37 +43,75 @@ alignment = 1
 [node name="Blood" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1
-text = "BLOOD PRESSURE"
+text = "BLOOD PRESSURE SYS"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="HSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Min" type="TextEdit" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 3
-max_value = 220.0
-value = 220.0
+placeholder_text = "0"
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(40, 0)
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
-text = "Max"
-horizontal_alignment = 2
+text = "-"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="HSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Max" type="TextEdit" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 3
-max_value = 220.0
+text = "220"
+placeholder_text = "220"
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(40, 0)
+[node name="Blood2" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Min"
-horizontal_alignment = 2
+text = "BLOOD PRESSURE DYS"
+horizontal_alignment = 1
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Min" type="TextEdit" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "0"
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "-"
+
+[node name="Max" type="TextEdit" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "220"
+placeholder_text = "220"
+
+[node name="Pulse" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "PULSE"
+horizontal_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Min" type="TextEdit" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "0"
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "-"
+
+[node name="Max" type="TextEdit" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "200"
+placeholder_text = "200"
 
 [node name="Date" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -98,8 +135,6 @@ layout_mode = 2
 layout_mode = 2
 text = "Update"
 
-[connection signal="drag_ended" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/HSlider" to="." method="update"]
-[connection signal="drag_ended" from="Panel/MarginContainer/VBoxContainer/HBoxContainer2/HSlider" to="." method="update"]
 [connection signal="changed" from="Panel/MarginContainer/VBoxContainer/Callendar" to="." method="update"]
 [connection signal="changed" from="Panel/MarginContainer/VBoxContainer/Callendar2" to="." method="update"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/Commit" to="." method="commit"]

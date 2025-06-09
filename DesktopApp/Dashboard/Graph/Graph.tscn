@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dn7fxv07rhfk" path="res://Dashboard/Graph/PojedynczyElement.tscn" id="1_byorb"]
 [ext_resource type="PackedScene" uid="uid://b2km4g7ugvg8l" path="res://Dashboard/Graph/GraphElement.tscn" id="3_cptwm"]
 
-[node name="Graph" type="Control" node_paths=PackedStringArray("graph_data", "graph_line")]
+[node name="Graph" type="Control" node_paths=PackedStringArray("graph_data", "graph_line", "buttons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,7 @@ graph_element = ExtResource("3_cptwm")
 max_pressure_value = 210
 line = ExtResource("1_byorb")
 graph_line = NodePath("MarginContainer/Background/Linie/Podziałka")
+buttons = [NodePath("HBoxContainer/CheckButton"), NodePath("HBoxContainer/CheckButton2"), NodePath("HBoxContainer/CheckButton3")]
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -80,3 +81,29 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CheckButton" type="CheckButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+button_pressed = true
+text = "sys"
+
+[node name="CheckButton2" type="CheckButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+button_pressed = true
+text = "dys"
+
+[node name="CheckButton3" type="CheckButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+button_pressed = true
+text = "pulse"
