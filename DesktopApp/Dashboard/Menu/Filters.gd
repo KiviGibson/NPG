@@ -10,6 +10,9 @@ signal commit_changes
 @export var date_min: Callendar
 @export var date_max: Callendar
 
+func _ready() -> void:
+	date_min.set_date(date_min.get_date()-84600*14)
+
 func update(_val: bool = false):
 	if date_min.get_date() > date_max.get_date():
 		date_max.set_date(date_min.get_date())

@@ -1,23 +1,37 @@
+class_name Auth
+
 extends Node
 
 @export var ip: TextEdit
 @export var login_input: TextEdit
 @export var password_input: TextEdit
 @export var info: Label
+@export var board: DashBoard
+
+
 func login() -> void:
 	if not check(): return
-	var message: String = await WebManager.login(login_input.text,password_input.text)
-	if message == "OK":
-		self.visible = false
-	info.text = message
+	info.text = WebManager.login(login_input.text,password_input.text, login_response)
+
+func login_response(response, code, _headers, _body) -> void:
+	if response != HTTPRequest.RESULT_SUCCESS:
+		push_error("Couldn't retrive data")
+	if code == 200:
+		login_success()
+	else:
+		info.text = "Login not successful."
 
 func register() -> void:
 	if not check(): return
-	var message: String = await WebManager.register(login_input.text,password_input.text)
-	if message == "OK":
-		self.visible = false
-	info.text = message
-
+	info.text = WebManager.register(login_input.text,password_input.text, register_response)
+	
+func register_response(response, code, _headers, _body) -> void:
+	if response != HTTPRequest.RESULT_SUCCESS:
+		push_error("Couldn't retrive data")
+	if code == 200:
+		login_success()
+	else:
+		info.text = "Register not successful."
 
 func check() -> bool:
 	var args := ip.text.split(":")
@@ -29,3 +43,7 @@ func check() -> bool:
 		info.text = "dane logowania nie zostały wypełnione"
 		return false
 	return true
+
+func login_success() -> void:
+	self.visible = false
+	board.visible = true
