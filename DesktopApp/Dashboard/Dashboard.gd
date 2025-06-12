@@ -7,20 +7,15 @@ extends Node
 
 
 func update_graph() -> void:
-	var filter_settings := filters.get_filters()
+	var error := WebManager.get_data(filters.get_filters(), response_update)
+	push_error(error)
+
+func response_update(response, code, _headers, body) -> void:
+	if response != HTTPRequest.RESULT_SUCCESS or code != 200:
+		push_error("Couldn't retrive data")
+		return
 	var list: Dictionary[String, Array]
-	# do usunięcia -----------------------
-	for value in range(filter_settings["date"][0], filter_settings["date"][1]+1, 86400):
-		var dict := Time.get_datetime_dict_from_unix_time(value)
-		var napis: String = str(dict["day"]) +"-"+str(dict["month"])
-		@warning_ignore("integer_division")
-		list[napis] = [
-			randi_range(filter_settings["sys"][0], filter_settings["sys"][1]),
-			randi_range(filter_settings["dys"][0], filter_settings["dys"][1]),
-			randi_range(filter_settings["pulse"][0], filter_settings["pulse"][1])
-			]
-			
-	# ------------------------------------
-	var data :=  list # await WebManager.get_data(filter_settings)
-	# check if data is correct then
-	graph.update(data)
+	for element in body["data"]:
+		var date := Time.get_datetime_dict_from_unix_time(element["date"]) 
+		list[date["day"] +"-"+ str(date["month"])] = [element["sys"], element["dys"], element["pulse"]]
+	graph.update(list)

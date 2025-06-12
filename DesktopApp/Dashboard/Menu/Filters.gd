@@ -22,6 +22,8 @@ func update_min(_val: bool = false):
 	if date_min.get_date() > date_max.get_date():
 		date_min.set_date(date_max.get_date())
 	for i in range(3):
+		if not min_value[i].text.is_valid_int():
+			min_value[i].text = str(0)
 		if int(min_value[i].text) > int(max_value[i].text):
 			min_value[i].text = max_value[i].text
 
@@ -30,6 +32,8 @@ func update_max(_val: bool = false):
 	if date_min.get_date() > date_max.get_date():
 		date_max.set_date(date_min.get_date())
 	for i in range(3):
+		if not max_value[i].text.is_valid_int():
+			max_value[i].text = str(220)
 		if int(min_value[i].text) > int(max_value[i].text):
 			max_value[i].text = min_value[i].text
 
