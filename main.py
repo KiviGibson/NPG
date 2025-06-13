@@ -9,7 +9,10 @@ auth = Auth(base)
 @app.route("/login")
 def login() -> Response:
     data = request.form
-    cred = auth.login(data["login"], data["password"])
+    try:
+        cred = auth.login(data["login"], data["password"])
+    except Exception:
+        return make_response({"status": "bad request"}, 400)
     if cred == -404:
         return make_response(
             {"error": 404, "message": "cant find pair of user and passowrd"}, 404
@@ -22,7 +25,10 @@ def login() -> Response:
 @app.route("/reguister")
 def reguister() -> Response:
     data = request.form
-    cred = auth.register(data["login"], data["password"])
+    try:
+        cred = auth.register(data["login"], data["password"])
+    except Exception:
+        return make_response({"status": "bad request"}, 400)
     if cred == -400:
         return make_response({"error": 400, "message": "Login is taken"}, 400)
     res = make_response({"status": "OK"}, 200)
@@ -36,8 +42,35 @@ def get_data() -> Response:
     id = auth.check_credentials(jwt)
     if id == -403:
         return make_response({"status": "Making Coffee", "message": "im a teepod"}, 418)
-    res_data = [
-        {"sys": "", "dys": "", "pulse": "", "date": ""}
-        for a in base.get_data(id, request.form["filters"])
-    ]
+    try:
+        res_data = [
+            {"sys": a.value[0], "dys": a.value[1], "pulse": a.value[2], "date": a.date}
+            for a in base.get_data(id, request.form["filters"])
+        ]
+    except Exception:
+        return make_response(
+            {"status": "Request denied", "message": "Unexpected error oddured"}, 500
+        )
     return make_response({"status": "OK", "data": res_data}, 200)
+
+
+@app.route("/add_data")
+def add_data() -> Response:
+    jwt = request.cookies["JWT"]
+    id = auth.check_credentials(jwt)
+    if id == -403:
+        return make_response(
+            {"status": "Making Coffee", "message": "I'm a Teepod"}, 418
+        )
+    try:
+        data = PressureData()
+        base.addData(data)
+    except Exception:
+        return make_response(
+            {
+                "status": "Request denied",
+                "message": "Data send was not correctly prepted",
+            },
+            400,
+        )
+    return make_response({"status": "OK"}, 200)
