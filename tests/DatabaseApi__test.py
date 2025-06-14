@@ -54,8 +54,8 @@ class AuthTests(unittest.TestCase):
         db = Database(":memory:")
         auth = Auth(db)
         res_jwt = auth.register("test", "test")
-        print(res_jwt)
         err_jwt = auth.check_credentials(None)
+        assert isinstance(res_jwt, int) == False
         id = auth.check_credentials(res_jwt)
         self.assertEqual(id, 1)
         self.assertEqual(err_jwt, -418)
