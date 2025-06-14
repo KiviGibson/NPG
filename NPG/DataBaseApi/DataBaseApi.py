@@ -1,5 +1,4 @@
 import sqlite3 as sqlite
-from typing import Type
 from dataclasses import dataclass
 
 
@@ -46,7 +45,7 @@ class Database:
         self._db.commit()
         print("Database connected")
 
-    def getUser(self, login: str) -> int:
+    def getUser(self, login: str) -> tuple | int:
         cursor = self._db.cursor()
         cursor.execute(
             """
@@ -83,20 +82,25 @@ class Database:
     def getData(
         self, id: int, filters: dict[str, tuple[float, float]] = {}
     ) -> list[PressureData]:
+        """
+        Dopuszczalne filtry: date, sys, dys, pulse i zawsze 2 wartości lub MAX
+        """
+        keys = ["date", "sys", "dys", "pulse"]
         res: list[PressureData] = []
         cursor = self._db.cursor()
         query: str = (
             "SELECT date, sys, dys, pulse, desc FROM pressure WHERE user_id = ? "
         )
         params: list = [id]
-        for entry in filters:
-            query += f" AND (? BETWEEN ? AND ?) "
-            params.append(entry)
-            params.append(filters[entry][0])
-            params.append(filters[entry][1])
+        for key, value in filters.items():
+            if key not in keys:
+                continue
+            query += f" AND ({key} BETWEEN ? AND ?) "
+            params.append(value[0])
+            params.append(value[1])
         cursor.execute(query + ";", params)
         for datum in cursor.fetchall():
-            res.append(PressureData(datum[0], datum[1], datum[2]))
+            res.append(PressureData(datum[0], datum[1:4], datum[4]))
         return res
 
     def addData(self, id: int, datum: PressureData) -> None:
