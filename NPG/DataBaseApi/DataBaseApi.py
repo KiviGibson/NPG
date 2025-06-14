@@ -81,23 +81,19 @@ class Database:
         return None
 
     def getData(
-        self,
-        id: int,
-        date: tuple[int, int] | None = None,
-        value: tuple[float, float] | None = None,
+        self, id: int, filters: dict[str, tuple[float, float]] = {}
     ) -> list[PressureData]:
         res: list[PressureData] = []
         cursor = self._db.cursor()
-        query: str = "SELECT date, value, desc FROM pressure WHERE user_id = ? "
+        query: str = (
+            "SELECT date, sys, dys, pulse, desc FROM pressure WHERE user_id = ? "
+        )
         params: list = [id]
-        if date is not None:
-            query += " AND (date BETWEEN ? AND ?) "
-            params.append(date[0])
-            params.append(date[1])
-        if value is not None:
-            query += " AND (value BETWEEN ? AND ?) "
-            params.append(value[0])
-            params.append(value[1])
+        for entry in filters:
+            query += f" AND (? BETWEEN ? AND ?) "
+            params.append(entry)
+            params.append(filters[entry][0])
+            params.append(filters[entry][1])
         cursor.execute(query + ";", params)
         for datum in cursor.fetchall():
             res.append(PressureData(datum[0], datum[1], datum[2]))

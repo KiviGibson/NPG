@@ -13,11 +13,14 @@ func login() -> void:
 	if not check(): return
 	info.text = WebManager.login(login_input.text,password_input.text, login_response)
 
-func login_response(response, code, _headers, _body) -> void:
+func login_response(response, code, headers, _body) -> void:
 	if response != HTTPRequest.RESULT_SUCCESS:
 		push_error("Couldn't retrive data")
 	if code == 200:
 		login_success()
+		for header in headers:
+			if -1 != header.find("Set-Cookie: "):
+				WebManager.Cookie = header.split(": ")[1]
 	else:
 		info.text = "Login not successful."
 
@@ -25,11 +28,15 @@ func register() -> void:
 	if not check(): return
 	info.text = WebManager.register(login_input.text,password_input.text, register_response)
 	
-func register_response(response, code, _headers, _body) -> void:
+func register_response(response, code, headers: Array[String], body) -> void:
 	if response != HTTPRequest.RESULT_SUCCESS:
 		push_error("Couldn't retrive data")
 	if code == 200:
 		login_success()
+		printt(headers, JSON.parse_string(body.get_string_from_utf8()))
+		for header in headers:
+			if -1 != header.find("Set-Cookie: "):
+				WebManager.Cookie = header.split(": ")[1]
 	else:
 		info.text = "Register not successful."
 
