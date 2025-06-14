@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dziennik pomiaru ciśnienia krwi</title>
+  <link rel="stylesheet" href="resources/css/index.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+     <div class="search">
+          <input type="text" id="searchInput" placeholder="Search by day or value...">
+          <button onclick="searchEntries()">Search</button>
+      </div>
+
+
+    <div class="calendar">
+        <h2>June 2025</h2>
+        <ul class="weekdays">
+          <li>Mo</li>
+          <li>Tu</li>
+          <li>We</li>
+          <li>Th</li>
+          <li>Fr</li>
+          <li>Sa</li>
+          <li>Su</li>
+        </ul>
+        
+        <div id="days"></div>
+       
+         
+
+       
+    </div>
+
+    <!-- Hidden editor modal -->
+      <div id="editorModal" class="editor-modal hidden">
+        <div class="editor-content">
+          <h3 id="editorTitle">Edit Entry</h3>
+          <p><strong>Day:</strong> <span id="selectedDayDisplay"></span></p>
+          
+          <label for="valueInput">Value (e.g., 120/80):</label>
+          <input type="text" id="valueInput" placeholder="___/___" style="width:100%">
+          <label for="entry">Note:</label>
+          <textarea id="entry" rows="4" style="width:100%"></textarea>
+          <button onclick="saveEntry()">Save</button>
+          <button onclick="closeEditor()">Close</button>
+        </div>
+      </div>
+
+    <div class="chart-container">
+      
+      <canvas id="statsChart" height="200"></canvas>
+
+    
+    </div>
+    
+      
+    
+    <button class="buttonDonate">Donate</button>
+    <div id="usosMessage" style="display:none; margin-top: 10px;">postawić 5 do Usos</div>
+  </div>
+
+  <script>
+    const daysEl = document.getElementById('days');
+    const entryEl = document.getElementById('entry');
+    const searchInput = document.getElementById('searchInput');
+    const editorModal = document.getElementById('editorModal');
+    const selectedDayDisplay = document.getElementById('selectedDayDisplay');
+    const valueInput = document.getElementById('valueInput');
+
+    let selectedDay = null;
+    let month = "June"
+    const entries = {
+      1: { value: '118/76', note: 'Good sleep' },
+      2: { value: '125/82', note: 'Mild stress' },
+      3: { value: '135/88', note: 'Tired after work' },
+      4: { value: '142/95', note: 'Headache in the morning' },
+      5: { value: '120/80', note: 'All fine' },
+      6: { value: '110/70', note: 'Relaxed weekend' },
+      7: { value: '128/85', note: 'Some pressure at work' },
+      8: { value: '138/90', note: 'Too much coffee' },
+      9: { value: '145/92', note: 'Feeling dizzy' },
+      10: { value: '119/78', note: 'Feeling well' },
+      11: { value: '122/80', note: 'Slight headache' },
+      12: { value: '130/85', note: 'Busy day' },
+      13: { value: '140/90', note: 'Heavy lunch' },
+      14: { value: '135/88', note: 'Skipped exercise' },
+      15: { value: '118/75', note: 'Relaxed walk' },
+      16: { value: '126/83', note: 'OK day' },
+      17: { value: '137/89', note: 'Stressful work' },
+      18: { value: '143/94', note: 'Too much salt' },
+      19: { value: '121/78', note: 'Morning jog' },
+      20: { value: '112/72', note: 'Rest day' },
+      21: { value: '129/84', note: 'Office day' },
+      22: { value: '133/87', note: 'Worked late' },
+      23: { value: '148/96', note: 'Anxious' },
+      24: { value: '119/76', note: 'Felt normal' },
+      25: { value: '124/81', note: 'Some anxiety' },
+      26: { value: '131/86', note: 'Long walk' },
+      27: { value: '144/92', note: 'Overate' },
+      28: { value: '116/74', note: 'Calm day' },
+      29: { value: '127/82', note: 'Regular day' },
+      30: { value: '139/89', note: 'Fatigue' }
+    };
+
+
+     for (let i = 1; i <= 6; i++) {
+      const div = document.createElement('div');
+      div.className = 'empty_day';
+      div.textContent = " ";
+      div.onclick = () => selectDay(i, div);
+      daysEl.appendChild(div);
+    } 
+
+    for (let i = 1; i <= 30; i++) {
+      const div = document.createElement('div');
+      div.className = 'day';
+      div.textContent = i;
+      div.onclick = () => selectDay(i, div);
+      daysEl.appendChild(div);
+    }
+
+
+    function classifyBP(value) {
+      const match = value.match(/^(\d{2,3})\/(\d{2,3})$/);
+      if (!match) return null;
+
+      const systolic = parseInt(match[1]);
+      const diastolic = parseInt(match[2]);
+
+      if (systolic <= 120 && diastolic <= 80) return 'normal';
+      if ((systolic > 120 && systolic < 130) && diastolic < 80) return 'elevated';
+      if ((systolic >= 130 && systolic < 140) || (diastolic >= 80 && diastolic < 90)) return 'high';
+      if (systolic >= 140 || diastolic >= 90) return 'critical';
+
+      return null;
+    }
+
+
+     function selectDay(day, element) {
+      selectedDay = day;
+      document.querySelectorAll('.day').forEach(d => d.classList.remove('selected'));
+      element.classList.add('selected');
+      valueInput.value = entries[day]?.value || '';
+      entryEl.value = entries[day]?.note || '';
+      selectedDayDisplay.textContent = month +` ${day}, 2025`;
+      
+      editorModal.classList.remove('hidden');
+    }
+
+    function saveEntry() {
+      if (selectedDay) {
+        entries[selectedDay] = {
+        value: valueInput.value,
+        note: entryEl.value
+      };
+        updateChart();
+        updateDayColors();
+        closeEditor();
+
+      }
+    }
+
+     function closeEditor() {
+      editorModal.classList.add('hidden');
+    }
+
+    function searchEntries() {
+      const query = searchInput.value.toLowerCase();
+      const found = Object.entries(entries).find(([day, val]) =>
+        day === query || val.toLowerCase().includes(query)
+      );
+      if (found) {
+        const [day] = found;
+        document.querySelectorAll('.day')[day - 1].scrollIntoView({ behavior: 'smooth' });
+      } else {
+        alert('No match found');
+      }
+    }
+
+    function updateDayColors() {
+        document.querySelectorAll('.day').forEach((dayEl, index) => {
+        const entry = entries[index + 1];
+        dayEl.classList.remove('normal', 'elevated', 'high', 'critical');
+        if (entry && entry.value) {
+          const category = classifyBP(entry.value);
+          if (category) dayEl.classList.add(category);
+        }
+      });
+    }
+
+    function updateChart() {
+      const labels = Object.keys(entries);
+      const data = labels.map(day => {
+      const val = entries[day].value;
+      return val ? 1 : 0;
+    });
+
+      statsChart.data.labels = labels;
+      statsChart.data.datasets[0].data = data;
+      statsChart.update();
+    }
+
+    const ctx = document.getElementById('statsChart').getContext('2d');
+    const statsChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Entry Length by Day',
+          data: [],
+          backgroundColor: '#2196f3'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+     document.getElementById("donatButton").addEventListener("click", function() {
+      document.getElementById("usosMessage").style.display = "block";
+    });
+  </script>
+</body>
+</html>
