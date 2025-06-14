@@ -15,7 +15,7 @@ class Database:
     """Class that holds Database Api logic"""
 
     def __init__(self, db: str) -> None:
-        self._db = sqlite.connect(db)
+        self._db = sqlite.connect(db, check_same_thread=False)
         cursor = self._db.cursor()
         cursor.execute("SELECT name FROM sqlite_master;")
         tables = cursor.fetchall()
@@ -80,9 +80,7 @@ class Database:
         return None
 
     def getData(
-        self,
-        id: int,
-        filters: dict[str, tuple[int, int]],
+        self, id: int, filters: dict[str, tuple[float, float]] = {}
     ) -> list[PressureData]:
         """
         Dopuszczalne filtry: date, sys, dys, pulse i zawsze 2 wartości lub MAX

@@ -1,0 +1,92 @@
+[gd_scene load_steps=2 format=3 uid="uid://d17vcyaqxkk7"]
+
+[ext_resource type="Script" uid="uid://bqewa5hlhbqwn" path="res://LoginScreen/Auth.gd" id="1_c3f8y"]
+
+[node name="Auth" type="Control" node_paths=PackedStringArray("ip", "login_input", "password_input", "info")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c3f8y")
+ip = NodePath("Panel/HBoxContainer/VBoxContainer/IPAdress")
+login_input = NodePath("Panel/HBoxContainer/VBoxContainer/Login")
+password_input = NodePath("Panel/HBoxContainer/VBoxContainer/Passwd")
+info = NodePath("Panel/HBoxContainer/VBoxContainer/Label")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(500, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
+custom_minimum_size = Vector2(450, 250)
+layout_mode = 2
+alignment = 1
+
+[node name="IPAdress" type="TextEdit" parent="Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "127.0.0.1:3000"
+
+[node name="Login" type="TextEdit" parent="Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Login"
+
+[node name="Passwd" type="TextEdit" parent="Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "password"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="login" type="Button" parent="Panel/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "login"
+
+[node name="register" type="Button" parent="Panel/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "register"
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/HBoxContainer/login" to="." method="login"]
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/HBoxContainer/register" to="." method="register"]
