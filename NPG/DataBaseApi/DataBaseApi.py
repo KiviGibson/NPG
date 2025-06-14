@@ -16,7 +16,7 @@ class Database:
     """Class that holds Database Api logic"""
 
     def __init__(self, db: str) -> None:
-        self._db = sqlite.connect(db)
+        self._db = sqlite.connect(db, check_same_thread=False)
         cursor = self._db.cursor()
         cursor.execute("SELECT name FROM sqlite_master;")
         tables = cursor.fetchall()

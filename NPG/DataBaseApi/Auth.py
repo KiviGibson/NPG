@@ -1,5 +1,5 @@
 import jwt
-from .DatabaseApi import Database
+from .DataBaseApi import Database
 import bcrypt
 
 

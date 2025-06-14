@@ -1,14 +1,16 @@
 from flask import Flask, request, Response, make_response
 from NPG import Database, PressureData, Auth
+import json
 
 app = Flask(__name__)
-base = Database(":memory:")
+base = Database("test.db")
 auth = Auth(base)
 
 
-@app.route("/login")
+@app.route("/login", methods=["POST"])
 def login() -> Response:
-    data = request.form
+    data = request.data
+    print(data)
     try:
         cred = auth.login(data["login"], data["password"])
     except Exception:
@@ -22,15 +24,17 @@ def login() -> Response:
     return res
 
 
-@app.route("/reguister")
+@app.route("/register", methods=["POST"])
 def reguister() -> Response:
-    data = request.form
+    data = json.loads(request.data)
+    print(data)
     try:
         cred = auth.register(data["login"], data["password"])
-    except Exception:
+        print(cred)
+    except ZeroDivisionError:
         return make_response({"status": "bad request"}, 400)
     if cred == -400:
-        return make_response({"error": 400, "message": "Login is taken"}, 400)
+        return make_response({"error": 400, "message": "Login is taken"}, 5000)
     res = make_response({"status": "OK"}, 200)
     res.set_cookie("JWT", cred)
     return res
@@ -45,7 +49,7 @@ def get_data() -> Response:
     try:
         res_data = [
             {"sys": a.value[0], "dys": a.value[1], "pulse": a.value[2], "date": a.date}
-            for a in base.get_data(id, request.form["filters"])
+            for a in base.get_data(id, request.data["filters"])
         ]
     except Exception:
         return make_response(
