@@ -8,6 +8,8 @@ extends Node
 @export var info: Label
 @export var board: DashBoard
 
+func _ready() -> void:
+	board.dash_logout.connect(logout)
 
 func login() -> void:
 	if not check(): return
@@ -54,3 +56,8 @@ func login_success() -> void:
 	self.visible = false
 	board.visible = true
 	board.update_graph()
+	
+func logout() -> void:
+	WebManager.Cookie = ""
+	self.visible = true
+	board.visible = false

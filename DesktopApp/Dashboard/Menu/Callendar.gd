@@ -7,12 +7,6 @@ signal changed
 @export var date: Dictionary
 @export var container: Node
 func _ready() -> void:
-	date = Time.get_datetime_dict_from_system()
-	date["minute"] = 0
-	date["second"] = 0
-	date["hour"] = 0
-	change_daycount(date["month"])
-	update_callendar()
 	var counter := 1
 	for child in container.get_children():
 		var button : Button = child.get_child(0)

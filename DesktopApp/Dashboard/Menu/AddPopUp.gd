@@ -8,12 +8,11 @@ extends Node
 
 var date: int
 
-func _ready() -> void:
-	show()
 func show() -> void:
 	var date_dct := Time.get_datetime_dict_from_system()
 	date_field.text = str(date_dct["day"]) + "-" + str(date_dct["month"]) + "-" + str(date_dct["year"])
 	date = Time.get_unix_time_from_datetime_dict(date_dct)
+	date
 	for field in num_fields:
 		field.text = ""
 	self.visible = true
@@ -26,7 +25,7 @@ func add() -> void:
 		"sys": float(num_fields[0].text), 
 		"dys": float(num_fields[1].text), 
 		"pulse": float(num_fields[2].text), 
-		"date": date,
+		"date": date - (date % 86400),
 		"desc": text_field.text
 		}
 	var error := WebManager.add_data(data, is_success)

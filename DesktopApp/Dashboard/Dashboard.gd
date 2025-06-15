@@ -5,6 +5,7 @@ extends Node
 @export var graph: Graph
 @export var filters: Filters
 
+signal dash_logout
 
 func update_graph() -> void:
 	var error := WebManager.get_data(filters.get_filters(), response_update)
@@ -23,3 +24,7 @@ func response_update(response, code, _headers, body) -> void:
 		var date := Time.get_datetime_dict_from_unix_time(element["date"]) 
 		list[str(date["day"]) +"-"+ str(date["month"])] = [element["sys"], element["dys"], element["pulse"], element["desc"]]
 	graph.update(list)
+
+func logout() -> void:
+	
+	dash_logout.emit()

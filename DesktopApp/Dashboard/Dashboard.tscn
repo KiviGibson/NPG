@@ -36,6 +36,7 @@ size_flags_horizontal = 3
 max_pressure_value = 230
 
 [node name="AddPopUp" parent="." instance=ExtResource("4_ob8ja")]
+visible = false
 layout_mode = 1
 
 [node name="Button" type="Button" parent="."]
@@ -44,12 +45,25 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -72.0
-offset_top = 4.0
-offset_right = -42.0
-offset_bottom = 35.0
+offset_left = -141.0
+offset_top = 7.0
+offset_right = -111.0
+offset_bottom = 38.0
 grow_horizontal = 0
 text = "+"
 
+[node name="Button2" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -104.0
+offset_top = 7.0
+offset_right = -35.0
+offset_bottom = 38.0
+grow_horizontal = 0
+text = "Log Out"
+
 [connection signal="commit_changes" from="HBoxContainer/Filters" to="." method="update_graph"]
 [connection signal="pressed" from="Button" to="AddPopUp" method="show"]
+[connection signal="pressed" from="Button2" to="." method="logout"]

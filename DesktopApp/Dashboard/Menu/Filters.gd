@@ -9,7 +9,8 @@ signal commit_changes
 @export var date_max: Callendar
 
 func _ready() -> void:
-	date_min.set_date(date_min.get_date()-84600*14)
+	date_min.set_date(Time.get_unix_time_from_system()-84600*14)
+	date_max.set_date(Time.get_unix_time_from_system())
 	for m in max_value:
 		m.focus_exited.connect(update_max)
 	for m in min_value:
