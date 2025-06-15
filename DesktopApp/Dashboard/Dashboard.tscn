@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://blv5vluivdowo"]
+[gd_scene load_steps=5 format=3 uid="uid://blv5vluivdowo"]
 
 [ext_resource type="Script" uid="uid://cos2i3i8gm78e" path="res://Dashboard/Dashboard.gd" id="1_ob8ja"]
 [ext_resource type="PackedScene" uid="uid://ri7ngrqcrbjh" path="res://Dashboard/Menu/Filters.tscn" id="3_5txqv"]
 [ext_resource type="PackedScene" uid="uid://drt5is70tl23" path="res://Dashboard/Graph/Graph.tscn" id="4_g7hxu"]
+[ext_resource type="PackedScene" uid="uid://ws0hb7ifirfw" path="res://Dashboard/Menu/AddPopUp.tscn" id="4_ob8ja"]
 
 [node name="Dashboard" type="Control" node_paths=PackedStringArray("graph", "filters")]
 layout_mode = 3
@@ -34,4 +35,21 @@ layout_mode = 2
 size_flags_horizontal = 3
 max_pressure_value = 230
 
+[node name="AddPopUp" parent="." instance=ExtResource("4_ob8ja")]
+layout_mode = 1
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -72.0
+offset_top = 4.0
+offset_right = -42.0
+offset_bottom = 35.0
+grow_horizontal = 0
+text = "+"
+
 [connection signal="commit_changes" from="HBoxContainer/Filters" to="." method="update_graph"]
+[connection signal="pressed" from="Button" to="AddPopUp" method="show"]

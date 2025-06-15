@@ -21,5 +21,5 @@ func response_update(response, code, _headers, body) -> void:
 	for element in data:
 		print(element)
 		var date := Time.get_datetime_dict_from_unix_time(element["date"]) 
-		list[str(date["day"]) +"-"+ str(date["month"])] = [element["sys"], element["dys"], element["pulse"]]
+		list[str(date["day"]) +"-"+ str(date["month"])] = [element["sys"], element["dys"], element["pulse"], element["desc"]]
 	graph.update(list)

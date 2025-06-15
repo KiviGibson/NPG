@@ -1,0 +1,153 @@
+[gd_scene load_steps=5 format=3 uid="uid://ws0hb7ifirfw"]
+
+[ext_resource type="Script" uid="uid://cdh6onbxnsyvl" path="res://Dashboard/Menu/AddPopUp.gd" id="1_xwybo"]
+[ext_resource type="Script" uid="uid://ko66i8rg6rad" path="res://Dashboard/Menu/NumField.gd" id="2_37cva"]
+
+[sub_resource type="Gradient" id="Gradient_37cva"]
+offsets = PackedFloat32Array(0, 0.346479)
+colors = PackedColorArray(0.0768358, 0.0768358, 0.0768358, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5qrwc"]
+gradient = SubResource("Gradient_37cva")
+width = 1
+height = 1
+
+[node name="AddPopUp" type="Control" node_paths=PackedStringArray("num_fields", "date_field", "text_field")]
+custom_minimum_size = Vector2(400, 330)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("1_xwybo")
+num_fields = [NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TextEdit"), NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/TextEdit2"), NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/TextEdit3")]
+date_field = NodePath("MarginContainer/VBoxContainer/TextEdit4")
+text_field = NodePath("MarginContainer/VBoxContainer/TextEdit5")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_5qrwc")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "ODCZYT"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.55
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sys"
+horizontal_alignment = 1
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "sys"
+script = ExtResource("2_37cva")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Dys"
+horizontal_alignment = 1
+
+[node name="TextEdit2" type="TextEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "dys"
+script = ExtResource("2_37cva")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Pulse"
+horizontal_alignment = 1
+
+[node name="TextEdit3" type="TextEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "pulse"
+script = ExtResource("2_37cva")
+
+[node name="TextEdit4" type="TextEdit" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+placeholder_text = "date"
+editable = false
+
+[node name="TextEdit5" type="TextEdit" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "desc"
+wrap_mode = 1
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Add"
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -32.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 33.0
+grow_horizontal = 0
+text = "X"
+
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TextEdit" to="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TextEdit" method="update"]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/TextEdit2" to="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/TextEdit2" method="update"]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/TextEdit3" to="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/TextEdit3" method="update"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="add"]
+[connection signal="pressed" from="Button" to="." method="hide"]

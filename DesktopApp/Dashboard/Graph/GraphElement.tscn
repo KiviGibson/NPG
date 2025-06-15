@@ -68,3 +68,10 @@ size_flags_vertical = 8
 text = "10/4"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="mouse_entered" from="HBoxContainer/First" to="." method="_on_mouse_enter"]
+[connection signal="mouse_exited" from="HBoxContainer/First" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/Second" to="." method="_on_mouse_enter"]
+[connection signal="mouse_exited" from="HBoxContainer/Second" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/Third" to="." method="_on_mouse_enter"]
+[connection signal="mouse_exited" from="HBoxContainer/Third" to="." method="_on_mouse_exited"]

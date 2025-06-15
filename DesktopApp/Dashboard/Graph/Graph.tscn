@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dn7fxv07rhfk" path="res://Dashboard/Graph/PojedynczyElement.tscn" id="1_byorb"]
 [ext_resource type="PackedScene" uid="uid://b2km4g7ugvg8l" path="res://Dashboard/Graph/GraphElement.tscn" id="3_cptwm"]
 
-[node name="Graph" type="Control" node_paths=PackedStringArray("graph_data", "graph_line", "buttons")]
+[node name="Graph" type="Control" node_paths=PackedStringArray("graph_data", "graph_line", "buttons", "desc")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +18,7 @@ max_pressure_value = 210
 line = ExtResource("1_byorb")
 graph_line = NodePath("MarginContainer/Background/Linie/Podziałka")
 buttons = [NodePath("HBoxContainer/CheckButton"), NodePath("HBoxContainer/CheckButton2"), NodePath("HBoxContainer/CheckButton3")]
+desc = NodePath("HBoxContainer/Label")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -107,3 +108,10 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 button_pressed = true
 text = "pulse"
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(300, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+vertical_alignment = 1

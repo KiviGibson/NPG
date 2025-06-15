@@ -7,19 +7,16 @@ extends Node
 var host: Dictionary = {"ip":"localhost","port":5000}
 
 func login(login_str: String, password: String, subscriber: Callable) -> String:
-	var body := {"login":login_str, "password": password}
-	return post_request(subscriber, body, "/login")
-	
-func register(login_str:String, password: String, subscriber) -> String:
-	var body := {"login":login_str, "password": password}
-	return post_request(subscriber, body, "/register")
-	
-func get_data(filters:Dictionary, subscriber) -> String:
-	var body := {"filters": filters}
-	return post_request(subscriber, body, "/get_data")
+	return post_request(subscriber, {"login":login_str, "password": password}, "/login")
 
-func add_data() -> String:
-	return ""
+func register(login_str:String, password: String, subscriber) -> String:
+	return post_request(subscriber, {"login":login_str, "password": password}, "/register")
+
+func get_data(filters:Dictionary, subscriber) -> String:
+	return post_request(subscriber, {"filters": filters}, "/get_data")
+
+func add_data(data: Dictionary[String, Variant], subscriber) -> String:
+	return post_request(subscriber, {"data": data}, "/add_data")
 
 func generate_headers() -> Array[String]:
 	var res: Array[String] = []
