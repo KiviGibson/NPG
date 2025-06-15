@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://qukwt44kv7xs"]
+
+[ext_resource type="PackedScene" uid="uid://blv5vluivdowo" path="res://Dashboard/Dashboard.tscn" id="1_dg2d1"]
+[ext_resource type="PackedScene" uid="uid://d17vcyaqxkk7" path="res://LoginScreen/Auth.tscn" id="1_nfj5t"]
+[ext_resource type="Texture2D" uid="uid://blhmhe31x5tdk" path="res://icon.svg" id="3_n0iy3"]
+
+[sub_resource type="Gradient" id="Gradient_fi437"]
+colors = PackedColorArray(0.12549, 0.12549, 0.12549, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n0iy3"]
+gradient = SubResource("Gradient_fi437")
+width = 1
+
+[node name="Base" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("GradientTexture1D_n0iy3")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.12549)
+top_level = true
+clip_children = 2
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -32.0
+offset_bottom = 32.0
+grow_horizontal = 0
+texture = ExtResource("3_n0iy3")
+expand_mode = 1
+
+[node name="Dashboard" parent="." instance=ExtResource("1_dg2d1")]
+visible = false
+layout_mode = 1
+
+[node name="Auth" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_nfj5t")]
+layout_mode = 1
+board = NodePath("../Dashboard")

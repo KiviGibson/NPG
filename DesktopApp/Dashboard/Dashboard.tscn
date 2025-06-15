@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://blv5vluivdowo"]
+
+[ext_resource type="Script" uid="uid://cos2i3i8gm78e" path="res://Dashboard/Dashboard.gd" id="1_ob8ja"]
+[ext_resource type="PackedScene" uid="uid://ri7ngrqcrbjh" path="res://Dashboard/Menu/Filters.tscn" id="3_5txqv"]
+[ext_resource type="PackedScene" uid="uid://drt5is70tl23" path="res://Dashboard/Graph/Graph.tscn" id="4_g7hxu"]
+[ext_resource type="PackedScene" uid="uid://ws0hb7ifirfw" path="res://Dashboard/Menu/AddPopUp.tscn" id="4_ob8ja"]
+
+[node name="Dashboard" type="Control" node_paths=PackedStringArray("graph", "filters")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ob8ja")
+graph = NodePath("HBoxContainer/Graph")
+filters = NodePath("HBoxContainer/Filters")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Filters" parent="HBoxContainer" instance=ExtResource("3_5txqv")]
+z_index = 1
+z_as_relative = false
+custom_minimum_size = Vector2(265, 0)
+layout_mode = 2
+
+[node name="Graph" parent="HBoxContainer" instance=ExtResource("4_g7hxu")]
+layout_mode = 2
+size_flags_horizontal = 3
+max_pressure_value = 230
+
+[node name="AddPopUp" parent="." instance=ExtResource("4_ob8ja")]
+visible = false
+layout_mode = 1
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -141.0
+offset_top = 7.0
+offset_right = -111.0
+offset_bottom = 38.0
+grow_horizontal = 0
+text = "+"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -104.0
+offset_top = 7.0
+offset_right = -35.0
+offset_bottom = 38.0
+grow_horizontal = 0
+text = "Log Out"
+
+[connection signal="commit_changes" from="HBoxContainer/Filters" to="." method="update_graph"]
+[connection signal="pressed" from="Button" to="AddPopUp" method="show"]
+[connection signal="pressed" from="Button2" to="." method="logout"]

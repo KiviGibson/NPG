@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dn7fxv07rhfk"]
+
+[ext_resource type="Script" uid="uid://b51cumgdkoutu" path="res://Dashboard/Graph/LineElement.gd" id="1_anqjt"]
+
+[sub_resource type="Gradient" id="Gradient_1n6it"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7gedn"]
+gradient = SubResource("Gradient_1n6it")
+width = 1
+
+[node name="PojedynczyElement" type="HBoxContainer" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(0, 30)
+script = ExtResource("1_anqjt")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = SubResource("GradientTexture1D_7gedn")

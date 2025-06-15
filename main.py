@@ -1,25 +1,93 @@
-from flask import Flask
-from flask import request
+from flask import Flask, request, Response, make_response
+from NPG import Database, PressureData, Auth
+import json
+
 app = Flask(__name__)
+base = Database("test.db")
+auth = Auth(base)
 
-@app.route('/get_data/<date>/<value>',methods=['GET'])
-def get_data(date:tuple[int,int],value:dict[str,tuple]):
-    return {"body":[
-        {"date":17491206316,"value":[120,80,70],"desc":"Nice"}
-    ]}
 
-@app.route('/add_data',methods=['POST'])
-def add_data():
-    request_data = request.form
+@app.route("/login", methods=["POST"])
+def login() -> Response:
+    data = json.loads(request.data)
+    try:
+        cred = auth.login(data["login"], data["password"])
+    except Exception:
+        return make_response({"status": "bad request"}, 400)
+    if isinstance(cred, int):
+        return make_response(
+            {"error": 404, "message": "cant find pair of user and passowrd"}, 404
+        )
+    res = make_response({"status": "OK"}, 200)
+    res.set_cookie("JWT", cred)
+    return res
 
-    return {"Status":"OK"}
 
-@app.route('/login',methods=['POST'])
-def login():
-    request_data = request.form
-    return {"Status":"OK"}
+@app.route("/register", methods=["POST"])
+def reguister() -> Response:
+    data = json.loads(request.data)
+    try:
+        cred = auth.register(data["login"], data["password"])
+        print(cred)
+    except Exception:
+        return make_response({"status": "bad request"}, 400)
+    if isinstance(cred, int):
+        return make_response({"error": 400, "message": "Login is taken"}, 400)
+    res = make_response({"status": "OK"}, 200)
+    res.set_cookie("JWT", cred)
+    return res
 
-@app.route('/register',methods=['POST'])
-def register():
-    request_data = request.form
-    return {"Status":"OK"}
+
+@app.route("/get_data", methods=["POST"])
+def get_data() -> Response:
+    jwt = request.cookies["JWT"]
+    data = json.loads(request.data)
+    print(jwt)
+    id = auth.check_credentials(jwt)
+    print(id, data)
+    if id == -403:
+        return make_response({"status": "Making Coffee", "message": "im a teepod"}, 418)
+    try:
+        res_data = [
+            {
+                "sys": a.value[0],
+                "dys": a.value[1],
+                "pulse": a.value[2],
+                "date": a.date,
+                "desc": a.desc,
+            }
+            for a in base.getData(id, data["filters"])
+        ]
+    except Exception:
+        return make_response(
+            {"status": "Request denied", "message": "Unexpected error oddured"}, 500
+        )
+    return make_response({"status": "OK", "data": res_data}, 200)
+
+
+@app.route("/add_data", methods=["POST"])
+def add_data() -> Response:
+    jwt = request.cookies["JWT"]
+    id = auth.check_credentials(jwt)
+    data = json.loads(request.data)["data"]
+    print(id, data)
+    if id == -403:
+        return make_response(
+            {"status": "Making Coffee", "message": "I'm a Teepod"}, 418
+        )
+    try:
+        pdata = PressureData(
+            data["date"],
+            [data["sys"], data["dys"], data["pulse"]],
+            data["desc"] if "desc" in data else "No Description",
+        )
+        base.addData(id, pdata)
+    except Exception:
+        return make_response(
+            {
+                "status": "Request denied",
+                "message": "Data send was not correctly prepted",
+            },
+            400,
+        )
+    return make_response({"status": "OK"}, 200)
