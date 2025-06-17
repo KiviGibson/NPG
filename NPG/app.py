@@ -15,7 +15,7 @@ def register():
         return 'missing login or password', 400
 
     users[login] = password
-    return 'ok '
+    return 'ok'
 
 @app.route('/login', methods=['POST'])
 def login():
