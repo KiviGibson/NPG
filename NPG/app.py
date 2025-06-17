@@ -2,9 +2,9 @@ from flask import Flask, request, jsonify
 
 app = Flask(_name_)
 
-# Tymczasowe magazyny danych
-users = {}  # login -> password
-data_storage = []  # lista słowników z danymi
+
+users = {}  
+data_storage = []  
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -57,7 +57,7 @@ def get_data():
     except (ValueError, TypeError):
         return jsonify({'data': []})
 
-    # Filtrowanie po dacie i wartości
+    
     filtered_data = [
         entry for entry in data_storage
         if entry['date'] == date and entry['value'] == value
